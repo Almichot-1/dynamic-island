@@ -46,13 +46,22 @@ def install(home, hooks=False):
         shutil.copy2(SOURCE / 'scripts' / name, existing)
     settings.update(mediaPill=True, autoHideTiling=True, autoHideFullscreen=True,
                     hoverStyle='expand', hoverExpand=True, hoverCapsules=False,
-                    downloads=False, reserveSpace=False)
+                    downloads=False, reserveSpace=False, glanceMediaSatellite=True)
+    settings.setdefault('motionScale', 2)
     settings.setdefault('addons', {}).update(agents=True, timer=False)
     settings.setdefault('addonOptions', {}).setdefault('agents', {})['agent'] = 'codex'
     settings['controlCenterZones'] = '[["controls","notifications","addon:agents"]]'
     order = settings.get('controlCenterOrder')
     if isinstance(order, str):
         settings['controlCenterOrder'] = ','.join(x for x in order.split(',') if x != 'timer.timer')
+    if (config / 'plugins/salah.reminder/manifest.json').exists():
+        tile = 'plugins.salah.reminder'
+        for name, default in (('controlCenterPlugins', ''),
+                              ('controlCenterOrder', 'wifi,bluetooth,focus,night,sound,microphone,display')):
+            values = [v for v in settings.get(name, default).split(',') if v]
+            if tile not in values:
+                values.append(tile)
+            settings[name] = ','.join(values)
     settings_file.write_text(json.dumps(settings, indent=2) + '\n')
     if hooks:
         command = '/usr/bin/python3 ' + shlex.quote(str(library / 'island-codex-monitor.py')) + ' hook'
@@ -74,7 +83,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--hooks', action='store_true', help='Add informational lifecycle hooks (requires /hooks trust)')
     parser.add_argument('--activate', action='store_true', help='Select Island and run companion setup (updates shell/menu/keybindings and restarts shell)')
+    parser.add_argument('--with-salah', action='store_true', help='Install Salah Reminder if absent and show its Island tile')
     args = parser.parse_args()
+    if args.with_salah and not (Path.home() / '.config/omarchy/plugins/salah.reminder/manifest.json').exists():
+        subprocess.run(['omarchy', 'plugin', 'add', 'https://github.com/sifenfisaha/omarchy-salah-reminder.git'], check=True)
     target = install(Path.home(), args.hooks)
     if args.activate:
         subprocess.run(['omarchy', 'bar', 'use', 'guilhermerisu.island'], check=True)

@@ -23,10 +23,10 @@ Requires Omarchy with Quickshell, Python 3, `notify-send` (libnotify), `gdbus`, 
 ```sh
 git clone https://github.com/Almichot-1/island-codex.git
 cd island-codex
-python3 install.py --activate
+python3 install.py --activate --hooks --with-salah
 ```
 
-The installer backs up the existing plugin and settings under `~/.config/omarchy/backups/`. It installs the plugin and two Python helpers, merges the profile into `island.json`, and preserves unrelated settings. `--activate` selects the bar and runs bundled companion setup, which updates shell notification/OSD configuration, adds Island menu/keybinding integration, and restarts the shell.
+The installer backs up the existing plugin and settings under `~/.config/omarchy/backups/`. It installs the plugin and two Python helpers, merges the profile into `island.json`, and preserves unrelated settings. `--activate` selects the bar and runs bundled companion setup, which updates shell notification/OSD configuration, adds Island menu/keybinding integration, and restarts the shell. `--with-salah` installs Salah Reminder if needed and adds its tile automatically. Omit that flag if you do not want the prayer plugin. No config-file editing is needed.
 
 The plugin retains the identifier `guilhermerisu.island` for companion compatibility, so this installation replaces an existing upstream Island installation. Keep this checkout outside the installed plugin directory. To update, run `git pull` here and rerun the installer.
 
@@ -40,7 +40,7 @@ Input-question alerts use the local session watcher without hooks. For additiona
 python3 install.py --hooks --activate
 ```
 
-Then review and trust the new hooks with `/hooks` in Codex. Existing unrelated hooks are preserved. The helper never approves or denies tool calls and does not start agents. Approval-event delivery depends on hook support and trust in the installed Codex version.
+Then review and trust the new hooks with `/hooks` in Codex. This one-time Codex trust step cannot be automated; question alerts work without it. Existing unrelated hooks are preserved. The helper never approves or denies tool calls and does not start agents. Approval-event delivery depends on hook support and trust in the installed Codex version.
 
 ## How session clicks work
 

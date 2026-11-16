@@ -19,12 +19,18 @@ class InstallTest(unittest.TestCase):
             hooks = home / '.codex/hooks.json'
             hooks.parent.mkdir()
             hooks.write_text(json.dumps({'hooks': {'Stop': [{'hooks': [{'command': 'existing-hook'}]}]}}))
+            salah = home / '.config/omarchy/plugins/salah.reminder/manifest.json'
+            salah.parent.mkdir(parents=True)
+            salah.write_text('{}')
             installer.install(home, hooks=True)
             installer.install(home, hooks=True)
             profile = json.loads(settings.read_text())
             self.assertFalse(profile['clock24h'])
             self.assertTrue(profile['addons']['weather'])
             self.assertTrue(profile['addons']['agents'])
+            self.assertIn('plugins.salah.reminder', profile['controlCenterPlugins'].split(','))
+            self.assertIn('plugins.salah.reminder', profile['controlCenterOrder'].split(','))
+            self.assertTrue(profile['glanceMediaSatellite'])
             stop = json.loads(hooks.read_text())['hooks']['Stop']
             self.assertEqual(len(stop), 2)
             self.assertEqual(stop[0]['hooks'][0]['command'], 'existing-hook')
