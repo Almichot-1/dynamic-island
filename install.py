@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the portable Island Codex profile without copying live session data."""
+"""Install Dynamic Island without copying live session data."""
 import argparse
 import datetime
 import json
@@ -15,7 +15,7 @@ RUNTIME = ('Island.qml', 'manifest.json', 'LICENSE', 'addons', 'companion', 'com
 def install(home, hooks=False):
     config = home / '.config/omarchy'
     target = config / 'plugins/guilhermerisu.island'
-    backup = config / 'backups' / ('island-codex-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f'))
+    backup = config / 'backups' / ('dynamic-island-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f'))
     if target.is_symlink():
         raise SystemExit('The installed plugin is a symlink; use a regular plugin directory first.')
     if target.resolve() == SOURCE:
@@ -75,7 +75,7 @@ def install(home, hooks=False):
                 group.append({'matcher': '*', 'hooks': [{'type': 'command', 'command': command, 'timeout': 3}]})
         hooks_file.parent.mkdir(parents=True, exist_ok=True)
         hooks_file.write_text(json.dumps(hook_config, indent=2) + '\n')
-    print('Installed Island Codex. Backup:', backup)
+    print('Installed Dynamic Island. Backup:', backup)
     return target
 
 

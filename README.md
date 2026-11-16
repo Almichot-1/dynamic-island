@@ -1,4 +1,4 @@
-# Island Codex
+# Dynamic Island
 
 A customized [Island for Omarchy](https://github.com/Guilhermerisu/island) with live Codex sessions, actionable notifications, and media that stays available when paused.
 
@@ -21,8 +21,8 @@ Based on Guilherme Pimenta's Island, upstream snapshot `664295d357dc6f5d57d975af
 Requires Omarchy with Quickshell, Python 3, `notify-send` (libnotify), `gdbus`, `jq`, and Codex installed locally. Desktop changes were exercised on Omarchy 4.0.4 and its Hyprland Lua configuration. Newer releases may need adjustments.
 
 ```sh
-git clone https://github.com/Almichot-1/island-codex.git
-cd island-codex
+git clone https://github.com/Almichot-1/dynamic-island.git
+cd dynamic-island
 python3 install.py --activate --hooks --with-salah
 ```
 
