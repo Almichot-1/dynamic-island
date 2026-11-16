@@ -1,0 +1,7 @@
+test.md
+__pycache__/
+*.py[cod]
+.env
+.env.*
+*.log
+.taste-skill/
