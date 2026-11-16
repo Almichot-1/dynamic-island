@@ -2,6 +2,23 @@
 
 A customized [Island for Omarchy](https://github.com/Guilhermerisu/island) with live Codex sessions, actionable notifications, and media that stays available when paused.
 
+## See it in motion
+
+[![Dynamic Island: install, hover reveal, media controls, Codex sessions, notifications, and Salah](docs/dynamic-island-preview.gif)](https://github.com/Almichot-1/dynamic-island/blob/main/docs/dynamic-island-demo.mp4)
+
+**[Watch the full 50-second walkthrough](https://github.com/Almichot-1/dynamic-island/raw/refs/heads/main/docs/dynamic-island-demo.mp4)** · The animated preview above plays at 2× speed.
+
+| Time | What you will see |
+| --- | --- |
+| 0:00 | Meet Dynamic Island |
+| 0:05 | Clone the repo and run the installer |
+| 0:14 | Reveal on hover, retract over apps |
+| 0:22 | Pause and resume from the hover panel |
+| 0:30 | Track and open Codex sessions |
+| 0:37 | Codex alerts alongside media and the Salah tile |
+
+This is a staged, silent walkthrough using the packaged QML components and sample data. Installation commands are shown for you to run; the video does not execute them. No personal conversations, notifications, or desktop captures are included. To rebuild it with Quickshell and FFmpeg, run `python3 docs/demo/render.py`.
+
 Based on Guilherme Pimenta's Island, upstream snapshot `664295d357dc6f5d57d975afcb664e13faacec12`, with local changes by Ahmed Yassin. The upstream MIT license is retained. This is a separately maintained snapshot, not an official upstream release.
 
 ## What changed
@@ -46,7 +63,7 @@ Then review and trust the new hooks with `/hooks` in Codex. This one-time Codex 
 
 The watcher discovers held local thread writer locks and reads session metadata and event tails. Notification clicks map the session lock owner to its terminal process, then focus that window through Hyprland. Ended sessions do not focus an unrelated agent. This targets local terminal sessions; remote agents and multiple sessions sharing the same terminal window may need manual selection.
 
-Notification history is stored locally in `~/.local/state/omarchy/notifications/island-history.json`. The monitor writes its own status under `~/.local/state/omarchy/island-codex/`. These files and all Codex conversations, credentials, personal settings, and desktop screenshots are excluded from this repository.
+Notification history is stored locally in `~/.local/state/omarchy/notifications/island-history.json`. The monitor writes its own status under `~/.local/state/omarchy/island-codex/`. These files and all Codex conversations, credentials, personal settings, and personal desktop captures are excluded from this repository.
 
 Telegram history entries whose original action is no longer available fall back to focusing Telegram. A shell restart cannot preserve a chat action owned by the old notification server.
 
